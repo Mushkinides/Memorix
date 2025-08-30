@@ -1,5 +1,5 @@
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { Settings2, Sparkles, Zap } from "lucide-react";
+import { UserCog, Sparkles, NotebookPen } from "lucide-react";
 import { ReactNode } from "react";
 
 export default function Features() {
@@ -8,27 +8,27 @@ export default function Features() {
       <div className="@container mx-auto max-w-5xl px-6">
         <div className="text-center">
           <h2 className="text-balance text-4xl font-semibold lg:text-5xl">
-            Built to cover your needs
+            🧠 Made for Thinkers Like You
           </h2>
           <p className="mt-4">
-            Libero sapiente aliquam quibusdam aspernatur, praesentium iusto
-            repellendus.
+            Smart, flexible and powerful - everything you need to build your
+            second brain.
           </p>
         </div>
         <div className="@min-4xl:max-w-full @min-4xl:grid-cols-3 mx-auto mt-8 grid max-w-sm gap-6 *:text-center md:mt-16">
           <Card className="group bg-background">
             <CardHeader className="pb-3">
               <CardDecorator>
-                <Zap className="size-6" aria-hidden />
+                <NotebookPen className="size-6" aria-hidden />
               </CardDecorator>
 
-              <h3 className="mt-6 font-medium">Customizable</h3>
+              <h3 className="mt-6 font-medium">Quick Notes</h3>
             </CardHeader>
 
             <CardContent>
               <p className="text-sm">
-                Extensive customization options, allowing you to tailor every
-                aspect to meet your specific needs.
+                Capture ideas instantly with lightning fast input and
+                keyboard-first UX. No friction.
               </p>
             </CardContent>
           </Card>
@@ -36,16 +36,16 @@ export default function Features() {
           <Card className="group bg-background">
             <CardHeader className="pb-3">
               <CardDecorator>
-                <Settings2 className="size-6" aria-hidden />
+                <UserCog className="size-6" aria-hidden />
               </CardDecorator>
 
-              <h3 className="mt-6 font-medium">You have full control</h3>
+              <h3 className="mt-6 font-medium">User Friendly</h3>
             </CardHeader>
 
             <CardContent>
               <p className="mt-3 text-sm">
-                From design elements to functionality, you have complete control
-                to create a unique and personalized experience.
+                Easy to pickup. Extensive features for advanced users. Fits like
+                a glove.
               </p>
             </CardContent>
           </Card>
@@ -56,13 +56,13 @@ export default function Features() {
                 <Sparkles className="size-6" aria-hidden />
               </CardDecorator>
 
-              <h3 className="mt-6 font-medium">Powered By AI</h3>
+              <h3 className="mt-6 font-medium">AI Assistant</h3>
             </CardHeader>
 
             <CardContent>
               <p className="mt-3 text-sm">
-                Elements to functionality, you have complete control to create a
-                unique experience.
+                Summzrize or write in a clearer way you notes with our in-house
+                special AI Assistant.
               </p>
             </CardContent>
           </Card>
