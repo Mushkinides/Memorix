@@ -9,10 +9,7 @@ export default function DashboardLayout({
   return (
     <SidebarProvider>
       <AppSidebar />
-      <main>
-        <SidebarTrigger />
-        {children}
-      </main>
+      <main className="flex-1">{children}</main>
     </SidebarProvider>
   );
 }
