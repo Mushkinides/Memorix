@@ -76,6 +76,7 @@ export const notebookRelations = relations(notebooks, ({ many, one }) => ({
 }));
 
 export type Notebook = typeof notebooks.$inferSelect;
+export type InsertNotebook = typeof notebooks.$inferInsert;
 
 export const notes = pgTable("notes", {
   id: text("id").primaryKey(),
