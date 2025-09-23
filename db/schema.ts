@@ -1,4 +1,5 @@
-import { pgTable, text, timestamp, boolean } from "drizzle-orm/pg-core";
+import { relations } from "drizzle-orm";
+import { pgTable, text, timestamp, boolean, jsonb } from "drizzle-orm/pg-core";
 
 export const user = pgTable("user", {
   id: text("id").primaryKey(),
@@ -9,10 +10,10 @@ export const user = pgTable("user", {
     .notNull(),
   image: text("image"),
   createdAt: timestamp("created_at")
-    .$defaultFn(() => /* @__PURE__ */ new Date())
+    .$defaultFn(() => new Date())
     .notNull(),
   updatedAt: timestamp("updated_at")
-    .$defaultFn(() => /* @__PURE__ */ new Date())
+    .$defaultFn(() => new Date())
     .notNull(),
 });
 
@@ -52,12 +53,55 @@ export const verification = pgTable("verification", {
   identifier: text("identifier").notNull(),
   value: text("value").notNull(),
   expiresAt: timestamp("expires_at").notNull(),
-  createdAt: timestamp("created_at").$defaultFn(
-    () => /* @__PURE__ */ new Date()
-  ),
-  updatedAt: timestamp("updated_at").$defaultFn(
-    () => /* @__PURE__ */ new Date()
-  ),
+  createdAt: timestamp("created_at").$defaultFn(() => new Date()),
+  updatedAt: timestamp("updated_at").$defaultFn(() => new Date()),
 });
 
-export const schema = { user, session, account, verification };
+export const notebooks = pgTable("notebooks", {
+  id: text("id").primaryKey(),
+  name: text("name").notNull(),
+  userId: text("user_id")
+    .notNull()
+    .references(() => user.id, { onDelete: "cascade" }),
+  createdAt: timestamp("created_at").$defaultFn(() => new Date()),
+  updatedAt: timestamp("updated_at").$defaultFn(() => new Date()),
+});
+
+export const notebookRelations = relations(notebooks, ({ many, one }) => ({
+  notes: many(notes),
+  user: one(user, {
+    fields: [notebooks.userId],
+    references: [user.id],
+  }),
+}));
+
+export type Notebook = typeof notebooks.$inferSelect;
+
+export const notes = pgTable("notes", {
+  id: text("id").primaryKey(),
+  title: text("title").notNull(),
+  content: jsonb("content").notNull(),
+  notebookId: text("notebook_id")
+    .notNull()
+    .references(() => notebooks.id, { onDelete: "cascade" }),
+  createdAt: timestamp("created_at").$defaultFn(() => new Date()),
+  updatedAt: timestamp("updated_at").$defaultFn(() => new Date()),
+});
+
+export const noteRelations = relations(notes, ({ one }) => ({
+  notebook: one(notebooks, {
+    fields: [notes.notebookId],
+    references: [notebooks.id],
+  }),
+}));
+
+export type Note = typeof notes.$inferSelect;
+
+export const schema = {
+  user,
+  session,
+  account,
+  verification,
+  notebooks,
+  notes,
+};
