@@ -12,24 +12,23 @@ export default async function NotePage({ params }: { params: Params }) {
 
   const { note } = await getNoteById(noteId);
 
-  // TODO: YOMAMA get rid of the [0]
   return (
     <PageWrapper
       breadcrumbs={[
         { label: "Dashboard", href: "/dashboard" },
         {
-          label: note[0]?.notebook?.name ?? "Notebook",
-          href: `/dashboard/notebook/${note[0]?.notebookId}`,
+          label: note?.notebook?.name ?? "Notebook",
+          href: `/dashboard/notebook/${note?.notebookId}`,
         },
         {
-          label: note[0]?.title ?? "Note",
-          href: `/dashboard/notebook/${note[0]?.notebookId}/note/${noteId}`,
+          label: note?.title ?? "Note",
+          href: `/dashboard/notebook/${note?.notebookId}/note/${noteId}`,
         },
       ]}
     >
-      <h1>{note[0]?.title}</h1>
+      <h1>{note?.title}</h1>
       <RichTextEditor
-        content={note[0]?.content as JSONContent[]}
+        content={note?.content as JSONContent[]}
         noteId={noteId}
       />
     </PageWrapper>
