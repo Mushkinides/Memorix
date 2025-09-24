@@ -1,5 +1,4 @@
 import { CreateNotebookButton } from "@/components/create-notebook-button";
-import { Logout } from "@/components/logout";
 import { PageWrapper } from "@/components/page-wrapper";
 import { getNotebooks } from "@/server/notebooks";
 

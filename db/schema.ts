@@ -69,14 +69,6 @@ export const notebooks = pgTable("notebooks", {
   updatedAt: timestamp("updated_at").$defaultFn(() => new Date()),
 });
 
-export const notebookRelations = relations(notebooks, ({ many, one }) => ({
-  notes: many(notes),
-  user: one(user, {
-    fields: [notebooks.userId],
-    references: [user.id],
-  }),
-}));
-
 export type Notebook = typeof notebooks.$inferSelect;
 export type InsertNotebook = typeof notebooks.$inferInsert;
 
@@ -92,6 +84,14 @@ export const notes = pgTable("notes", {
   createdAt: timestamp("created_at").$defaultFn(() => new Date()),
   updatedAt: timestamp("updated_at").$defaultFn(() => new Date()),
 });
+
+export const notebookRelations = relations(notebooks, ({ many, one }) => ({
+  notes: many(notes),
+  user: one(user, {
+    fields: [notebooks.userId],
+    references: [user.id],
+  }),
+}));
 
 export const noteRelations = relations(notes, ({ one }) => ({
   notebook: one(notebooks, {
