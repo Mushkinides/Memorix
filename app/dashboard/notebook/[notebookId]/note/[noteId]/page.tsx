@@ -19,9 +19,12 @@ export default async function NotePage({ params }: { params: Params }) {
         { label: "Dashboard", href: "/dashboard" },
         {
           label: note[0]?.notebook?.name ?? "Notebook",
-          href: `/dashboard/notebook/${note?.notebook?.id}`,
+          href: `/dashboard/notebook/${note[0]?.notebookId}`,
         },
-        { label: note[0]?.title ?? "Note", href: `/dashboard/note/${noteId}` },
+        {
+          label: note[0]?.title ?? "Note",
+          href: `/dashboard/notebook/${note[0]?.notebookId}/note/${noteId}`,
+        },
       ]}
     >
       <h1>{note[0]?.title}</h1>
