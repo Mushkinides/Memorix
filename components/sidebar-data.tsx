@@ -64,7 +64,7 @@ export function SidebarData({ data }: SidebarDataProps) {
                 <SidebarMenu>
                   {item.items.map((item) => (
                     <SidebarMenuItem key={item.title}>
-                      <SidebarMenuButton asChild isActive={item.isActive}>
+                      <SidebarMenuButton asChild>
                         <a href={item.url}>
                           <File />
                           {item.title}
