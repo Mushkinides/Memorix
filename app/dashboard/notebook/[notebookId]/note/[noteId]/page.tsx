@@ -17,6 +17,10 @@ export default async function NotePage({ params }: { params: Params }) {
     <PageWrapper
       breadcrumbs={[
         { label: "Dashboard", href: "/dashboard" },
+        {
+          label: note[0]?.notebook?.name ?? "Notebook",
+          href: `/dashboard/notebook/${note?.notebook?.id}`,
+        },
         { label: note[0]?.title ?? "Note", href: `/dashboard/note/${noteId}` },
       ]}
     >

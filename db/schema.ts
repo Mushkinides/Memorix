@@ -1,5 +1,5 @@
 import { relations, sql } from "drizzle-orm";
-import { pgTable, text, timestamp, boolean, jsonb } from "drizzle-orm/pg-core";
+import { boolean, jsonb, pgTable, text, timestamp } from "drizzle-orm/pg-core";
 
 export const user = pgTable("user", {
   id: text("id").primaryKey(),
@@ -10,10 +10,10 @@ export const user = pgTable("user", {
     .notNull(),
   image: text("image"),
   createdAt: timestamp("created_at")
-    .$defaultFn(() => new Date())
+    .$defaultFn(() => /* @__PURE__ */ new Date())
     .notNull(),
   updatedAt: timestamp("updated_at")
-    .$defaultFn(() => new Date())
+    .$defaultFn(() => /* @__PURE__ */ new Date())
     .notNull(),
 });
 
@@ -53,8 +53,12 @@ export const verification = pgTable("verification", {
   identifier: text("identifier").notNull(),
   value: text("value").notNull(),
   expiresAt: timestamp("expires_at").notNull(),
-  createdAt: timestamp("created_at").$defaultFn(() => new Date()),
-  updatedAt: timestamp("updated_at").$defaultFn(() => new Date()),
+  createdAt: timestamp("created_at").$defaultFn(
+    () => /* @__PURE__ */ new Date()
+  ),
+  updatedAt: timestamp("updated_at").$defaultFn(
+    () => /* @__PURE__ */ new Date()
+  ),
 });
 
 export const notebooks = pgTable("notebooks", {
@@ -65,11 +69,25 @@ export const notebooks = pgTable("notebooks", {
   userId: text("user_id")
     .notNull()
     .references(() => user.id, { onDelete: "cascade" }),
-  createdAt: timestamp("created_at").$defaultFn(() => new Date()),
-  updatedAt: timestamp("updated_at").$defaultFn(() => new Date()),
+  createdAt: timestamp("created_at").$defaultFn(
+    () => /* @__PURE__ */ new Date()
+  ),
+  updatedAt: timestamp("updated_at").$defaultFn(
+    () => /* @__PURE__ */ new Date()
+  ),
 });
 
-export type Notebook = typeof notebooks.$inferSelect;
+export const notebookRelations = relations(notebooks, ({ many, one }) => ({
+  notes: many(notes),
+  user: one(user, {
+    fields: [notebooks.userId],
+    references: [user.id],
+  }),
+}));
+
+export type Notebook = typeof notebooks.$inferSelect & {
+  notes: Note[];
+};
 export type InsertNotebook = typeof notebooks.$inferInsert;
 
 export const notes = pgTable("notes", {
@@ -81,17 +99,13 @@ export const notes = pgTable("notes", {
   notebookId: text("notebook_id")
     .notNull()
     .references(() => notebooks.id, { onDelete: "cascade" }),
-  createdAt: timestamp("created_at").$defaultFn(() => new Date()),
-  updatedAt: timestamp("updated_at").$defaultFn(() => new Date()),
+  createdAt: timestamp("created_at").$defaultFn(
+    () => /* @__PURE__ */ new Date()
+  ),
+  updatedAt: timestamp("updated_at").$defaultFn(
+    () => /* @__PURE__ */ new Date()
+  ),
 });
-
-export const notebookRelations = relations(notebooks, ({ many, one }) => ({
-  notes: many(notes),
-  user: one(user, {
-    fields: [notebooks.userId],
-    references: [user.id],
-  }),
-}));
 
 export const noteRelations = relations(notes, ({ one }) => ({
   notebook: one(notebooks, {
@@ -110,4 +124,6 @@ export const schema = {
   verification,
   notebooks,
   notes,
+  notebookRelations,
+  noteRelations,
 };
