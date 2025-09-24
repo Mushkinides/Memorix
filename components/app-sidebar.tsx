@@ -8,6 +8,7 @@ import {
 import { getNotebooks } from "@/server/notebooks";
 import Image from "next/image";
 import { SidebarData } from "./sidebar-data";
+import Link from "next/link";
 
 export async function AppSidebar({
   ...props
@@ -31,10 +32,10 @@ export async function AppSidebar({
   return (
     <Sidebar {...props}>
       <SidebarHeader>
-        <div className="flex items-center gap-2">
-          <Image src="/logo-32x32.png" alt="Logo" width={32} height={32} />
+        <Link href="/" className="flex items-center gap-2">
+          <Image src="/logo-512x512.png" alt="Logo" width={32} height={32} />
           <h2>Memorix</h2>
-        </div>
+        </Link>
         <SearchForm />
       </SidebarHeader>
       <SidebarContent className="gap-0">
