@@ -1,8 +1,7 @@
 import * as React from "react";
-import { ChevronRight } from "lucide-react";
+import { ChevronRight, File } from "lucide-react";
 
 import { SearchForm } from "@/components/search-form";
-import { VersionSwitcher } from "@/components/version-switcher";
 import {
   Collapsible,
   CollapsibleContent,
@@ -21,6 +20,7 @@ import {
   SidebarRail,
 } from "@/components/ui/sidebar";
 import { getNotebooks } from "@/server/notebooks";
+import Image from "next/image";
 
 export async function AppSidebar({
   ...props
@@ -44,10 +44,10 @@ export async function AppSidebar({
   return (
     <Sidebar {...props}>
       <SidebarHeader>
-        <VersionSwitcher
-          versions={data.versions}
-          defaultVersion={data.versions[0]}
-        />
+        <div className="flex items-center gap-2">
+          <Image src="/logo-32x32.png" alt="Logo" width={32} height={32} />
+          <h2>Memorix</h2>
+        </div>
         <SearchForm />
       </SidebarHeader>
       <SidebarContent className="gap-0">
@@ -77,7 +77,10 @@ export async function AppSidebar({
                     {item.items.map((item) => (
                       <SidebarMenuItem key={item.title}>
                         <SidebarMenuButton asChild isActive={item.isActive}>
-                          <a href={item.url}>{item.title}</a>
+                          <a href={item.url}>
+                            <File />
+                            {item.title}
+                          </a>
                         </SidebarMenuButton>
                       </SidebarMenuItem>
                     ))}
