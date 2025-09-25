@@ -1,19 +1,14 @@
 "use client";
 import Link from "next/link";
-import { Logo } from "@/components/logo";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import React from "react";
 import { cn } from "@/lib/utils";
 import { useScroll } from "motion/react";
 import { ModeToggle } from "./mode-toggle";
+import Image from "next/image";
 
-const menuItems = [
-  { name: "Features", href: "#link" },
-  { name: "Solution", href: "#link" },
-  { name: "Pricing", href: "#link" },
-  { name: "About", href: "#link" },
-];
+const menuItems: { name: string; href: string }[] = [];
 
 export const HeroHeader = () => {
   const [menuState, setMenuState] = React.useState(false);
@@ -45,7 +40,14 @@ export const HeroHeader = () => {
                 aria-label="home"
                 className="flex items-center space-x-2"
               >
-                <Logo />
+                <Image
+                  src="/logo-512x512.png"
+                  alt="logo"
+                  width={32}
+                  height={32}
+                />
+
+                <span className="text-2xl font-bold">Memorix</span>
               </Link>
 
               <button
